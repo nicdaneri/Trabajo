@@ -21,7 +21,7 @@ library(readxl)
 access <- read_excel("data.xlsx")
 View(access)
 ```
-     cuando quise revisar todo de nuevo antes de mandarlo, no cargaba la data con el link ni en R en pc ni en RStudio cuando antes sí había funcionao ("evaluation error")
+     cuando quise revisar todo de nuevo antes de mandarlo, no cargaba la data con el link ni en R en pc ni en RStudio cuando antes sí había funcionado ("evaluation error")
      pongo tambien importarla por si acaso 
 
 
