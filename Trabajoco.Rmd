@@ -1,0 +1,112 @@
+
+```{r}
+install.packages("rio")
+```
+
+### base 1: acceso a servicios basicos (saneamiento)
+
+
+```{r}
+
+library(rio)
+
+Data="https://github.com/nicdaneri/Trabajo/raw/master/data.xlsx"
+access=import(Data)
+names(access)
+
+```
+
+
+```{r}
+names(access)=c("country","2017","2016","2015","2014","2013","2012","2011","2010","2009","2008")
+```
+
+  limpio los nombres de los paises
+  
+```{r}
+install.packages("stringr")
+```
+
+  
+```{r}
+library(stringr)
+
+access$country=str_split(access$country,
+                         pattern = "\\(",
+                         simplify = T)[,1]
+```
+
+
+```{r}
+str(access)
+```
+
+elimino espacios en blanco
+```{r}
+access$country=trimws(access$country,whitespace = "[\\h\\v]")
+```
+
+ transformo variables a numericas
+```{r}
+access[,-1]=lapply(access[,-1], as.numeric)
+```
+
+ celdas vacias o con texto estan como NA, elimino filas
+ 
+```{r}
+access=na.omit(access)
+```
+ 
+
+### base 2: recaudacion de impuestos
+
+```{r}
+
+rec="https://github.com/nicdaneri/Trabajo/raw/master/recaudacionimpositiva.xlsx"
+imp=import(rec)
+names(imp)
+
+```
+
+   importando
+```{r}
+library(readxl)
+
+imp <- read_excel("recaudacion impositiva.xlsx")
+View(imp)
+```
+
+
+elimino dos primeras columnas (nombre de variable)
+```{r}
+imp[c(1,2)]=NULL
+```
+
+cambio el nombre de dos 
+```{r}
+names(imp)[1]="Pais"
+names(imp)[2]="Cod"
+```
+
+elimino espacios en blanco
+```{r}
+imp$Pais=trimws(imp$Pais,whitespace = "[\\h\\v]")
+imp$Cod=trimws(imp$Cod,whitespace = "[\\h\\v]")
+
+```
+
+transformo los valores a num?ricos
+```{r}
+imp[,-c(1,2)]=lapply(imp[,-c(1,2)], as.numeric)
+```
+
+   reviso que los espacios vacios aparezcan como NA al haberse cambiado a numero
+```{r}
+imp[!complete.cases(imp),]
+```
+
+elimino filas vacias
+```{r}
+imp=na.omit(imp)
+```
+
